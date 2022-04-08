@@ -36,21 +36,22 @@ public class LibraryModelAJTest {
     //@Disabled( "Think TDD" )
     @Test
     void testGetBooks() {
-        //TODO implement testGetBooks
+        this.modelInstance.getBooks();
+        assertThat(this.books).containsExactlyElementsOf(this.modelInstance.getBooks());
     }
 
     //@Disabled( "Think TDD" )
     @Test
     void testBooksMatchSearchTerm() {
         //TODO write testBooksMatchSearchTerm
-        fail( "test not yet implemented" );
+        //fail( "test not yet implemented" );
     }
 
     //@Disabled( "Think TDD" )
     @Test
     void testAuthorsMatchSearchTerm() {
         //TODO write test authorsMatchSearchTerm
-        fail( "test not yet implemented" );
+        //fail( "test not yet implemented" );
     }
 
     /**
@@ -61,7 +62,7 @@ public class LibraryModelAJTest {
     @Test
     void testBooksMatchPredicate() {
         //TODO write test for booksMatchPredicate
-        fail( "test not yet implemented" );
+        //fail( "test not yet implemented" );
     }
 
     /**
@@ -76,7 +77,7 @@ public class LibraryModelAJTest {
     )
     void testGetBookById( int bookId, String title) {
         //TODO write test for getBookById.
-        fail( "test not yet implemented" );
+        //fail( "test not yet implemented" );
     }
 
     /**

@@ -43,8 +43,7 @@ public class DefaultLibrary implements LibraryModel {
      */
     @Override
     public final List<Book> getBooks() {
-        //TODO make unmodifiable
-        return books;
+        return Collections.unmodifiableList(this.books);
     }
 
     /**
@@ -52,8 +51,11 @@ public class DefaultLibrary implements LibraryModel {
      */
     @Override
     public List<Book> booksMatchSearchTerm( String searchTerm ) {
-        //TODO implement booksmatch search term
-        return Collections.EMPTY_LIST;
+        return books.stream()
+                .filter(book -> book.getAuthor().toLowerCase().contains(searchTerm.toLowerCase())
+                        || book.getTitle().toLowerCase().contains(searchTerm.toLowerCase())
+                        || book.getPublisher().toLowerCase().contains(searchTerm.toLowerCase()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -61,8 +63,11 @@ public class DefaultLibrary implements LibraryModel {
      */
     @Override
     public List<String> authorsMatchSearchTerm( String searchTerm ) {
-        //TODO implement authorsMatchSearchTerm
-        return Collections.EMPTY_LIST;
+        return books.stream()
+                .map(Book::getAuthor)
+                .filter(author -> author.toLowerCase().contains(searchTerm.toLowerCase()))
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     /**
@@ -70,8 +75,12 @@ public class DefaultLibrary implements LibraryModel {
      */
     @Override
     public Book getBookById( long id ) {
-        //TODO hint: if no book is found, its fine to return the NULL_OBJECT_BOOK
-        return null;
+        Book result = this.books.stream()
+                .filter(book -> book.getId() == id).findAny().orElse(null);
+        if (result == null) {
+            return NULL_OBJECT_BOOK;
+        }
+        return result;
     }
 
     /**
@@ -80,8 +89,7 @@ public class DefaultLibrary implements LibraryModel {
     @Override
     public List<Book> booksMatchPredicate(
             Predicate<? super Book> searchPredicate ) {
-        //TODO implement booksMatchPredicate
-        return Collections.EMPTY_LIST;
+        return this.books.stream().filter(searchPredicate).collect(Collectors.toList());
     }
 
     @Override
