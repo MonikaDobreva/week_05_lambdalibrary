@@ -2,6 +2,8 @@ package nl.fontys.sebivenlo.library;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.assertj.core.api.Assertions;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,14 +45,14 @@ public class LibraryModelAJTest {
     //@Disabled( "Think TDD" )
     @Test
     void testBooksMatchSearchTerm() {
-        //TODO write testBooksMatchSearchTerm
+        assertThat(this.modelInstance.booksMatchSearchTerm("patterns")).contains(books(0));
         //fail( "test not yet implemented" );
     }
 
     //@Disabled( "Think TDD" )
     @Test
     void testAuthorsMatchSearchTerm() {
-        //TODO write test authorsMatchSearchTerm
+        assertThat(this.modelInstance.authorsMatchSearchTerm("gamma")).contains(books.get(2).getAuthor());
         //fail( "test not yet implemented" );
     }
 
@@ -61,7 +63,8 @@ public class LibraryModelAJTest {
     //@Disabled( "Think TDD" )
     @Test
     void testBooksMatchPredicate() {
-        //TODO write test for booksMatchPredicate
+        assertThat(this.modelInstance.booksMatchPredicate(book -> book.getPublisher().equals("Addison Wesley")))
+                .containsExactlyElementsOf(this.books.stream().filter(book -> book.getPublisher().equals("Addison Wesley")).collect(Collectors.toList()));
         //fail( "test not yet implemented" );
     }
 
@@ -76,7 +79,8 @@ public class LibraryModelAJTest {
         "14,'Practical Unit Testing with JUnit and Mockito'" }
     )
     void testGetBookById( int bookId, String title) {
-        //TODO write test for getBookById.
+        assertThat(this.modelInstance.getBookById(bookId))
+                .isEqualTo(this.books.stream().filter(book -> book.getId() == bookId).findFirst().orElse(null));
         //fail( "test not yet implemented" );
     }
 
